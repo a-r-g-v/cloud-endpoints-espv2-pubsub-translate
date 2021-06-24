@@ -21,6 +21,8 @@ const _ = grpc.SupportPackageIsVersion7
 type TestAPIClient interface {
 	HandleTestMessageRPC(ctx context.Context, in *PubSubRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	PublishTestMessageRPC(ctx context.Context, in *PublishTestMessageRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	HandleTestTask(ctx context.Context, in *HandleTestTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	CreateTestTask(ctx context.Context, in *CreateTestTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type testAPIClient struct {
@@ -49,12 +51,32 @@ func (c *testAPIClient) PublishTestMessageRPC(ctx context.Context, in *PublishTe
 	return out, nil
 }
 
+func (c *testAPIClient) HandleTestTask(ctx context.Context, in *HandleTestTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/test.TestAPI/HandleTestTask", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *testAPIClient) CreateTestTask(ctx context.Context, in *CreateTestTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/test.TestAPI/CreateTestTask", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TestAPIServer is the server API for TestAPI service.
 // All implementations must embed UnimplementedTestAPIServer
 // for forward compatibility
 type TestAPIServer interface {
 	HandleTestMessageRPC(context.Context, *PubSubRequest) (*emptypb.Empty, error)
 	PublishTestMessageRPC(context.Context, *PublishTestMessageRequest) (*emptypb.Empty, error)
+	HandleTestTask(context.Context, *HandleTestTaskRequest) (*emptypb.Empty, error)
+	CreateTestTask(context.Context, *CreateTestTaskRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedTestAPIServer()
 }
 
@@ -67,6 +89,12 @@ func (UnimplementedTestAPIServer) HandleTestMessageRPC(context.Context, *PubSubR
 }
 func (UnimplementedTestAPIServer) PublishTestMessageRPC(context.Context, *PublishTestMessageRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PublishTestMessageRPC not implemented")
+}
+func (UnimplementedTestAPIServer) HandleTestTask(context.Context, *HandleTestTaskRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HandleTestTask not implemented")
+}
+func (UnimplementedTestAPIServer) CreateTestTask(context.Context, *CreateTestTaskRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTestTask not implemented")
 }
 func (UnimplementedTestAPIServer) mustEmbedUnimplementedTestAPIServer() {}
 
@@ -117,6 +145,42 @@ func _TestAPI_PublishTestMessageRPC_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TestAPI_HandleTestTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HandleTestTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TestAPIServer).HandleTestTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/test.TestAPI/HandleTestTask",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TestAPIServer).HandleTestTask(ctx, req.(*HandleTestTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TestAPI_CreateTestTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTestTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TestAPIServer).CreateTestTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/test.TestAPI/CreateTestTask",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TestAPIServer).CreateTestTask(ctx, req.(*CreateTestTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TestAPI_ServiceDesc is the grpc.ServiceDesc for TestAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -131,6 +195,14 @@ var TestAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PublishTestMessageRPC",
 			Handler:    _TestAPI_PublishTestMessageRPC_Handler,
+		},
+		{
+			MethodName: "HandleTestTask",
+			Handler:    _TestAPI_HandleTestTask_Handler,
+		},
+		{
+			MethodName: "CreateTestTask",
+			Handler:    _TestAPI_CreateTestTask_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

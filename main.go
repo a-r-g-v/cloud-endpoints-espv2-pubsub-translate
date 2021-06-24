@@ -12,6 +12,7 @@ import (
 
 	"github.com/a-r-g-v/cloud-endpoints-espv2-pubsub-translate/grpc"
 	"github.com/a-r-g-v/cloud-endpoints-espv2-pubsub-translate/pubsub"
+	"github.com/a-r-g-v/cloud-endpoints-espv2-pubsub-translate/task"
 )
 
 func getProjectID(ctx context.Context) (string, error) {
@@ -46,7 +47,13 @@ func main() {
 		os.Exit(1)
 	}
 
-	s, err := grpc.NewServer(pc)
+	ct, err := task.NewClient(ctx, projectID, "asia-northeast1", "44903873603-compute@developer.gserviceaccount.com", "pubsub-translate-gateway-g7ag5sxmgq-an.a.run.app")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[ERROR] task.NewClient failed. err: %+v", err)
+		os.Exit(1)
+	}
+
+	s, err := grpc.NewServer(pc, ct)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "[ERROR] grpc.NewServer failed. err: %+v", err)
 		os.Exit(1)

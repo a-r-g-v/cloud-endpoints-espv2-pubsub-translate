@@ -40,11 +40,18 @@ authentication:
       jwks_uri: https://www.googleapis.com/oauth2/v3/certs
       issuer: https://accounts.google.com
       audiences: pubsub-translate-gateway-g7ag5sxmgq-an.a.run.app
+    - id: cloudtasks
+      jwks_uri: https://www.googleapis.com/oauth2/v3/certs
+      issuer: https://accounts.google.com
+      audiences: pubsub-translate-gateway-g7ag5sxmgq-an.a.run.app
 
   rules:
     - selector: "test.TestAPI.HandleTestMessageRPC"
       requirements:
         - provider_id: pubsub
+    - selector: "test.TestAPI.HandleTestTask"
+      requirements:
+        - provider_id: cloudtasks
 
 #
 # API usage restrictions.

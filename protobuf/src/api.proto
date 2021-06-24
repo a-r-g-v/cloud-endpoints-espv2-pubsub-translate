@@ -8,6 +8,10 @@ import "google/pubsub/v1/pubsub.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
+message HandleTestTaskRequest {
+  string data = 1;
+  int64 amount = 2;
+}
 
 // TestAPI
 service TestAPI {
@@ -25,6 +29,23 @@ service TestAPI {
     };
   }
 
+  rpc HandleTestTask(HandleTestTaskRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post : "/v1/handle_test_task"
+      body: "*"
+    };
+  }
+
+  rpc CreateTestTask(CreateTestTaskRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post : "/v1/create_test_task"
+      body: "*"
+    };
+  }
+}
+
+message CreateTestTaskRequest {
+  string name = 1;
 }
 
 message PublishTestMessageRequest {

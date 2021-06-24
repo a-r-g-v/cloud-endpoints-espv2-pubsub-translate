@@ -10,5 +10,5 @@ protoc:
 		--validate_out='lang=go:./pb/testv1' \
 		--include_imports \
 		--include_source_info \
-		--descriptor_set_out=pb/api_descriptor.pb \
+		--descriptor_set_out=api_descriptor.pb \
 		./protobuf/src/*.proto

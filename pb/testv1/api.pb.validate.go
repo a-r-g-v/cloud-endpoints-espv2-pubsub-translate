@@ -33,6 +33,146 @@ var (
 	_ = ptypes.DynamicAny{}
 )
 
+// Validate checks the field values on HandleTestTaskRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *HandleTestTaskRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Data
+
+	// no validation rules for Amount
+
+	return nil
+}
+
+// HandleTestTaskRequestValidationError is the validation error returned by
+// HandleTestTaskRequest.Validate if the designated constraints aren't met.
+type HandleTestTaskRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e HandleTestTaskRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e HandleTestTaskRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e HandleTestTaskRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e HandleTestTaskRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e HandleTestTaskRequestValidationError) ErrorName() string {
+	return "HandleTestTaskRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e HandleTestTaskRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sHandleTestTaskRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = HandleTestTaskRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = HandleTestTaskRequestValidationError{}
+
+// Validate checks the field values on CreateTestTaskRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *CreateTestTaskRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	return nil
+}
+
+// CreateTestTaskRequestValidationError is the validation error returned by
+// CreateTestTaskRequest.Validate if the designated constraints aren't met.
+type CreateTestTaskRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateTestTaskRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateTestTaskRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateTestTaskRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateTestTaskRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateTestTaskRequestValidationError) ErrorName() string {
+	return "CreateTestTaskRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateTestTaskRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateTestTaskRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateTestTaskRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateTestTaskRequestValidationError{}
+
 // Validate checks the field values on PublishTestMessageRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
